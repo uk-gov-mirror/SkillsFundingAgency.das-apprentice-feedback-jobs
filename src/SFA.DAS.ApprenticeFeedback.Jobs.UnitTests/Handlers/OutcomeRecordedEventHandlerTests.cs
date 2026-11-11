@@ -44,10 +44,9 @@ namespace SFA.DAS.ApprenticeFeedback.Jobs.UnitTests.Handlers
 
             await _handler.Handle(message, _messageHandlerContext);
 
-            _apprenticeFeedbackApi.Verify(api => api.CreateFeedbackTransaction(
-                It.Is<CreateFeedbackTransactionRequest>(r =>
-                    r.ApprenticeshipId == message.ApprenticeshipId &&
-                    r.TemplateName == "ApprenticeshipOutcome")),
+            _apprenticeFeedbackApi.Verify(api => api.CreateOutcomeFeedbackTransaction(
+                It.Is<CreateOutcomeFeedbackTransactionRequest>(r =>
+                    r.ApprenticeshipId == message.ApprenticeshipId)),
                 Times.Once);
         }
 
@@ -56,13 +55,13 @@ namespace SFA.DAS.ApprenticeFeedback.Jobs.UnitTests.Handlers
         {
             await _handler.Handle(CreateEvent(OutcomeType.Fail), _messageHandlerContext);
 
-            _apprenticeFeedbackApi.Verify(api => api.CreateFeedbackTransaction(It.IsAny<CreateFeedbackTransactionRequest>()), Times.Never);
+            _apprenticeFeedbackApi.Verify(api => api.CreateOutcomeFeedbackTransaction(It.IsAny<CreateOutcomeFeedbackTransactionRequest>()), Times.Never);
         }
 
         [Test]
         public void Handle_ShouldRethrow_WhenApiFails()
         {
-            _apprenticeFeedbackApi.Setup(api => api.CreateFeedbackTransaction(It.IsAny<CreateFeedbackTransactionRequest>()))
+            _apprenticeFeedbackApi.Setup(api => api.CreateOutcomeFeedbackTransaction(It.IsAny<CreateOutcomeFeedbackTransactionRequest>()))
                 .Throws(new InvalidOperationException("boom"));
 
 

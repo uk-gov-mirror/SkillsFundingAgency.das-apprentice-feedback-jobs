@@ -1,8 +1,7 @@
 namespace SFA.DAS.ApprenticeFeedback.Jobs.Infrastructure.Api.Requests
 {
-    public class CreateFeedbackTransactionRequest
+    public class CreateOutcomeFeedbackTransactionRequest
     {
         public long ApprenticeshipId { get; set; }
-        public string TemplateName { get; set; } = string.Empty;
     }
 }

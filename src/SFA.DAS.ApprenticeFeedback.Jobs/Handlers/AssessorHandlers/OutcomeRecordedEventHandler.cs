@@ -11,8 +11,6 @@ namespace SFA.DAS.ApprenticeFeedback.Jobs.Handlers.AssessorHandlers
 {
     public class OutcomeRecordedEventHandler : IHandleMessages<OutcomeRecordedEvent>
     {
-        public const string TemplateName = "ApprenticeshipOutcome";
-
         private readonly IApprenticeFeedbackApi _apprenticeFeedbackApi;
         private readonly ILogger<OutcomeRecordedEventHandler> _logger;
 
@@ -37,10 +35,9 @@ namespace SFA.DAS.ApprenticeFeedback.Jobs.Handlers.AssessorHandlers
                     return;
                 }
 
-                await _apprenticeFeedbackApi.CreateFeedbackTransaction(new CreateFeedbackTransactionRequest
+                await _apprenticeFeedbackApi.CreateOutcomeFeedbackTransaction(new CreateOutcomeFeedbackTransactionRequest
                 {
-                    ApprenticeshipId = message.ApprenticeshipId,
-                    TemplateName = TemplateName
+                    ApprenticeshipId = message.ApprenticeshipId
                 });
             }
             catch (Exception ex)
